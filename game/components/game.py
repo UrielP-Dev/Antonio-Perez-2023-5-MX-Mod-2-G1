@@ -14,7 +14,7 @@ class Game:
         self.game_speed = 10 # el numero de pixeles que el "objeto / imagen" se mueve en patalla
         self.x_pos_bg = 0
         self.y_pos_bg = 0
-        self.spaceship = Spaceship()
+        self.spaceship = Spaceship(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     def run(self):
         # Game loop: events - update - draw
@@ -36,7 +36,7 @@ class Game:
 
     def update(self):
         events = pygame.key.get_pressed()
-        self.spaceship.update( events)
+        self.spaceship.update(events)
         
        
 
