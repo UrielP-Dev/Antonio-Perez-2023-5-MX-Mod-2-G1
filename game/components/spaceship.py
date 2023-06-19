@@ -10,8 +10,8 @@ class Spaceship(Sprite):
         self.image = SPACESHIP
         self.image = pygame.transform.scale(self.image,(self.image_width, self.image_heigth))
         self.rect = self.image.get_rect()
-        self.rect.centerx = screen_width // 2
-        self.rect.centery = screen_height // 2
+        self.rect.centerx = SCREEN_WIDTH // 2
+        self.rect.centery = SCREEN_HEIGHT // 2
         self.speed = 15
         
     def draw(self, screen):
