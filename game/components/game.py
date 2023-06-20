@@ -35,7 +35,16 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT: #el QUIT event es el click en el icono que cierra ventana
                 self.playing = False
+                
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.player.shoot()
 
+            if event.type == pygame.KEYUP:
+             if event.key == pygame.K_SPACE:
+                # Puedes agregar aquí algún código adicional si deseas manejar la tecla de espacio liberada
+             
+                pass
     def update(self):
         # pass # pass equivale a hacer nada 
         user_input = pygame.key.get_pressed()

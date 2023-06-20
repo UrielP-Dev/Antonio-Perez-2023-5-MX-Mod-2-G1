@@ -1,4 +1,5 @@
 from game.components.enemies.enemy_ship import EnemyShip
+from game.components.bullet import Bullet
 
 class EnemyHandler:
     MAX_ENEMIES = 4

@@ -1,6 +1,7 @@
 import random
 
 from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from game.components.bullet import Bullet
 
 class Enemy:
     X_POS_LIST = [100, 150, 200, 250, 300, 350, 400, 450]
