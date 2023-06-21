@@ -32,7 +32,9 @@ class Spaceship:
             self.move_down()
             
         if self.bullet is not None:
-            self.bullet.update()    
+            self.bullet.update() 
+            
+          
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -59,3 +61,5 @@ class Spaceship:
 
     def shoot(self):
         self.bullet = Bullet(self.rect.center, BULLET)
+        
+    
