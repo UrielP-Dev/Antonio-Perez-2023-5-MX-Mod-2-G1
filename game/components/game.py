@@ -16,7 +16,7 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = 0
         self.player = Spaceship()
-        self.enemy_handler = EnemyHandler()
+        self.enemy_handler = EnemyHandler(self.player)
 
     def run(self):
         # Game loop: events - update - draw
@@ -31,9 +31,9 @@ class Game:
         pygame.quit()
 
     def handle_events(self):
-        # pygame.event.get() es un iterable (lista)
+        
         for event in pygame.event.get():
-            if event.type == pygame.QUIT: #el QUIT event es el click en el icono que cierra ventana
+            if event.type == pygame.QUIT: 
                 self.playing = False
                 
             if event.type == pygame.KEYDOWN:
@@ -41,12 +41,11 @@ class Game:
                     self.player.shoot()
 
             if event.type == pygame.KEYUP:
-             if event.key == pygame.K_SPACE:
-                # Puedes agregar aquí algún código adicional si deseas manejar la tecla de espacio liberada
-             
-                pass
+                if event.key == pygame.K_SPACE:
+                    pass
+                
     def update(self):
-        # pass # pass equivale a hacer nada 
+        
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.enemy_handler.update()

@@ -15,8 +15,9 @@ class Bullet(Sprite):
     def update(self):
         self.rect.y -= self.speed
        
-        
-        
 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
+        
+    def collides_with_enemy(self, enemy):
+        return self.rect.colliderect(enemy.rect)   
