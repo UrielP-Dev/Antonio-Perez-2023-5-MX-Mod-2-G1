@@ -9,7 +9,7 @@ class Bullet(Sprite):
         self.image = pygame.transform.scale(sprite, (30, 40))
         self.rect = self.image.get_rect()
         self.speed = 50
-        self.speed_enemy = 30
+        self.speed_enemy = 10
         self.rect.center = location
         
 

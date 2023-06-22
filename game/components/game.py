@@ -18,6 +18,8 @@ class Game:
         self.player = Spaceship()
         self.enemy_handler = EnemyHandler(self.player)
         self.score = 0
+        self.highest_score = 0 
+        self.new_hs = False
 
     def run(self):
         # Game loop: events - update - draw
@@ -30,6 +32,10 @@ class Game:
                 self.show_game_over_screen()
                 self.player.num_collisions = 0
                 self.score = self.enemy_handler.score
+                if self.score > self.highest_score:
+                    self.new_hs = True
+                    self.highest_score = self.score
+
 
                 waiting = True
                 while waiting:
@@ -96,6 +102,13 @@ class Game:
         continue_text = font.render("Press Enter to Restar", True, (255, 255, 255))
         continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
         self.screen.blit(continue_text, continue_rect)
+        continue_text = font.render("Highest Score: " + str(self.highest_score), True, (255, 255, 255))
+        continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 200))
+        self.screen.blit(continue_text, continue_rect)
+        if self.new_hs:
+            continue_text = font.render("NEW Highest Score!!!!" , True, (255, 255, 255))
+            continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 250))
+            self.screen.blit(continue_text, continue_rect)
         pygame.display.flip()  
         waiting = True
         while waiting:
