@@ -31,7 +31,19 @@ class EnemyHandler:
                 enemy.enemy_bullet.update_enemy()
                 if enemy.enemy_bullet.rect.colliderect(self.player.rect):
                     print("colision2")
-                    enemy.enemy_bullet = None         
+                    self.player.num_collisions += 1
+                    print(self.player.num_collisions)
+                    enemy.enemy_bullet = None
+                    
+            #if enemy.enemy_bullet is not None:
+            # #   enemy.enemy_bullet.update_enemy()
+            #    if enemy.enemy_bullet.rect.colliderect(self.player.bullet.rect()):
+            #        enemy.enemy_bullet = None
+            #        self.player.bullet = None
+                    
+
+        if self.player.num_collisions >= 3:
+            self.playing = False     
             
             
                     
@@ -49,4 +61,13 @@ class EnemyHandler:
 
     def remove_enemy(self, enemy):
         self.enemies.remove(enemy)
+        
+    def lose_game(self):
+        if self.player.num_collisions >= 3:
+            return False
+        else:
+            return True  
+    
+
+         
 

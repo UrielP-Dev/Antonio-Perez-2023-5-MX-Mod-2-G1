@@ -17,18 +17,33 @@ class Game:
         self.y_pos_bg = 0
         self.player = Spaceship()
         self.enemy_handler = EnemyHandler(self.player)
+        self.score = 0
 
     def run(self):
         # Game loop: events - update - draw
         self.playing = True
-        while self.playing:
+        while self.playing and self.enemy_handler.lose_game():
             self.handle_events()
             self.update()
             self.draw()
-        else:
-            print("Something ocurred to quit the game!")
+            if not self.enemy_handler.lose_game():
+                self.show_game_over_screen()
+                self.player.num_collisions = 0
+                self.score = self.enemy_handler.score
+
+                waiting = True
+                while waiting:
+                    for event in pygame.event.get():
+                        if event.type == pygame.KEYDOWN:
+                            if event.key == pygame.K_RETURN:
+                                waiting = False
+                                self.enemy_handler = EnemyHandler(self.player)  # Reiniciar los enemigos
+                                self.playing = True
         pygame.display.quit()
-        pygame.quit()
+        pygame.quit()                    
+                              
+        
+                        
 
     def handle_events(self):
         
@@ -68,3 +83,23 @@ class Game:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
+
+    def show_game_over_screen(self):
+        self.screen.fill((0, 0, 0))  
+        font = pygame.font.Font(None, 36)
+        text = font.render("Game Over", True, (255, 255, 255))
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        self.screen.blit(text, text_rect)
+        score_text = font.render("Score: " + str(self.enemy_handler.score), True, (255, 255, 255))
+        score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
+        self.screen.blit(score_text, score_rect)
+        continue_text = font.render("Press Enter to Restar", True, (255, 255, 255))
+        continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
+        self.screen.blit(continue_text, continue_rect)
+        pygame.display.flip()  
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        waiting = False

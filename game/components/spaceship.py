@@ -17,6 +17,7 @@ class Spaceship:
         self.rect.y = self.Y_POS
         self.is_alive = True
         self.bullet = None
+        self.num_collisions = 0
 
     def update(self, user_input):
         if user_input[pygame.K_LEFT]:
