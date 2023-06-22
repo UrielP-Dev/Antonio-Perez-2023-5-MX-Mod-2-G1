@@ -3,6 +3,7 @@ import pygame
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_handler import EnemyHandler
+from game.components.Menu import GameOverScreen
 
 class Game:
     def __init__(self):
@@ -29,22 +30,15 @@ class Game:
             self.update()
             self.draw()
             if not self.enemy_handler.lose_game():
-                self.show_game_over_screen()
+                game_over_screen = GameOverScreen(self.screen, self.enemy_handler.score, self.new_hs, self.highest_score)
+                game_over_screen.show()
                 self.player.num_collisions = 0
                 self.score = self.enemy_handler.score
                 if self.score > self.highest_score:
-                    self.new_hs = True
                     self.highest_score = self.score
-
-
-                waiting = True
-                while waiting:
-                    for event in pygame.event.get():
-                        if event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_RETURN:
-                                waiting = False
-                                self.enemy_handler = EnemyHandler(self.player)  # Reiniciar los enemigos
-                                self.playing = True
+                    self.new_hs = True
+                    self.enemy_handler = EnemyHandler(self.player)  # Reiniciar los enemigos
+                    self.playing = True
         pygame.display.quit()
         pygame.quit()                    
                               
@@ -90,29 +84,3 @@ class Game:
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
 
-    def show_game_over_screen(self):
-        self.screen.fill((0, 0, 0))  
-        font = pygame.font.Font(None, 36)
-        text = font.render("Game Over", True, (255, 255, 255))
-        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
-        self.screen.blit(text, text_rect)
-        score_text = font.render("Score: " + str(self.enemy_handler.score), True, (255, 255, 255))
-        score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 50))
-        self.screen.blit(score_text, score_rect)
-        continue_text = font.render("Press Enter to Restar", True, (255, 255, 255))
-        continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 100))
-        self.screen.blit(continue_text, continue_rect)
-        continue_text = font.render("Highest Score: " + str(self.highest_score), True, (255, 255, 255))
-        continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 200))
-        self.screen.blit(continue_text, continue_rect)
-        if self.new_hs:
-            continue_text = font.render("NEW Highest Score!!!!" , True, (255, 255, 255))
-            continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 250))
-            self.screen.blit(continue_text, continue_rect)
-        pygame.display.flip()  
-        waiting = True
-        while waiting:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:
-                        waiting = False

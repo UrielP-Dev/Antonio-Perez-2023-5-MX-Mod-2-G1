@@ -25,14 +25,14 @@ class EnemyHandler:
                     print("Colision")
                     self.player.bullet = None
                     self.score += 100
-                    print(self.score)
+                    print("Puntuacion", self.score)
                     
             if enemy.enemy_bullet is not None:
                 enemy.enemy_bullet.update_enemy()
                 if enemy.enemy_bullet.rect.colliderect(self.player.rect):
-                    print("colision2")
+                    print("Life lose")
                     self.player.num_collisions += 1
-                    print(self.player.num_collisions)
+                    print("Lifes: ", 3-self.player.num_collisions)
                     enemy.enemy_bullet = None
                     
             #if enemy.enemy_bullet is not None:
