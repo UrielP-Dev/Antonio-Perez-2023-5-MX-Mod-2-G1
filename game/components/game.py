@@ -37,6 +37,7 @@ class Game:
                 if self.score > self.highest_score:
                     self.highest_score = self.score
                     self.new_hs = True
+
                     self.enemy_handler = EnemyHandler(self.player)  # Reiniciar los enemigos
                     self.playing = True
         pygame.display.quit()

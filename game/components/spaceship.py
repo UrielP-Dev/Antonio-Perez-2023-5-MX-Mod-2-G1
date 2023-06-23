@@ -1,5 +1,5 @@
 import pygame
-from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, BULLET
+from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, BULLET, SPACESHIP_SHIELD
 from game.components.bullet import Bullet
 
 class Spaceship:
@@ -7,7 +7,7 @@ class Spaceship:
     Y_POS = 500
     SPACESHIP_WIDTH = 40
     SPACESHIP_HEIGHT = 60
-    SPACESHIP_SPEED = 10
+    SPACESHIP_SPEED = 20
 
     def __init__(self):
         self.image = SPACESHIP
@@ -18,6 +18,7 @@ class Spaceship:
         self.is_alive = True
         self.bullet = None
         self.num_collisions = 0
+        self.shield_start_time = None
 
     def update(self, user_input):
         if user_input[pygame.K_LEFT]:
@@ -62,5 +63,17 @@ class Spaceship:
 
     def shoot(self):
         self.bullet = Bullet(self.rect.center, BULLET)
+        
+    def shield(self):
+        self.image = SPACESHIP_SHIELD
+        self.image = pygame.transform.scale(self.image, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT))
+        
+    
+    def shield_off(self):
+        self.image = SPACESHIP
+        self.image = pygame.transform.scale(self.image, (self.SPACESHIP_WIDTH, self.SPACESHIP_HEIGHT)) 
+    
+        
+            
         
     

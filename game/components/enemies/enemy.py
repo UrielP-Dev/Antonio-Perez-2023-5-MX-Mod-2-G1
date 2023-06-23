@@ -1,7 +1,8 @@
 import random
 
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET
-from game.components.bullet import Bullet
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET, SHIELD, HEART
+from game.components.bullet import Bullet 
+from game.components.powerup import Powerup
 
 class Enemy:
     X_POS_LIST = [100, 150, 200, 250, 300, 350, 400, 450]
@@ -24,6 +25,7 @@ class Enemy:
         self.is_alive = True
         self.shoot_interval = 0
         self.enemy_bullet = None
+        self.powerup = None
 
 
     def update(self):
@@ -31,13 +33,21 @@ class Enemy:
             self.is_alive = False
         self.move()
         self.shoot()
+        self.power()
         if self.enemy_bullet is not None:
             self.enemy_bullet.update_enemy()
             if self.enemy_bullet.rect.bottom >= SCREEN_HEIGHT:
                 self.enemy_bullet = None
+                
+        if self.powerup is not None:
+            self.powerup.update()
+            if self.powerup.rect.bottom >= SCREEN_HEIGHT:
+                pass    
+                
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        
 
     def move(self):
         self.rect.y += self.SPEED_Y
@@ -57,6 +67,12 @@ class Enemy:
     def shoot(self):
         if self.shoot_interval <= 0:
             self.enemy_bullet = Bullet(self.rect.center, BULLET)
-            self.shoot_interval = random.randint(10, 50 )  # Intervalo de tiempo aleatorio entre disparos
+            self.shoot_interval = random.randint(30, 100)  # Intervalo de tiempo aleatorio entre disparos
         else:
             self.shoot_interval -= 1    
+            
+    def power(self):
+        if self.is_alive == False:
+            self.powerup= Powerup(self.rect.center, SHIELD)
+            
+               
